@@ -24,6 +24,9 @@
 
 #import <objc/message.h>
 
+// Declare
+void WKPreferencesSetMediaDevicesEnabled(WKPreferences* preferencesRef, bool enabled);
+
 #define CDV_BRIDGE_NAME @"cordova"
 #define CDV_WKWEBVIEW_FILE_URL_LOAD_SELECTOR @"loadFileURL:allowingReadAccessToURL:"
 
@@ -69,6 +72,9 @@
 {
     WKWebViewConfiguration* configuration = [[WKWebViewConfiguration alloc] init];
     configuration.processPool = [[CDVWKProcessPoolFactory sharedFactory] sharedProcessPool];
+
+    WKPreferencesSetMediaDevicesEnabled(configuration.preferences, true);
+
     if (settings == nil) {
         return configuration;
     }
@@ -103,7 +109,7 @@
         [wkWebView.scrollView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
     }
 #endif
-    
+
     wkWebView.UIDelegate = self.uiDelegate;
     self.engineWebView = wkWebView;
 
